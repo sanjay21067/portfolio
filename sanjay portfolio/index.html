@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sanjay L — Full Stack &amp; AI Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0A0A;
+    --panel: #141414;
+    --panel-2: #1C1C1C;
+    --line: #2E2E2E;
+    --text: #F2F2F2;
+    --muted: #9A9A9A;
+    --mint: #FF3B3B;
+    --mint-dim: #B3241F;
+    --amber: #FF9F43;
+    --radius: 3px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    background-image:
+      linear-gradient(rgba(255,59,59,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,59,59,0.04) 1px, transparent 1px);
+    background-size: 42px 42px;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--mint); color:#0A0A0A;}
+  :focus-visible{outline:2px solid var(--mint); outline-offset:2px;}
+
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- Console top bar ---------- */
+  .console-bar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,10,10,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .console-bar .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:52px; max-width:1080px;
+  }
+  .console-id{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--muted);
+  }
+  .dots{display:flex; gap:6px;}
+  .dots span{width:8px; height:8px; border-radius:50%; background:var(--line);}
+  .dots span:nth-child(1){background:#FF6B6B;}
+  .dots span:nth-child(2){background:var(--amber);}
+  .dots span:nth-child(3){background:var(--mint);}
+  .console-status{
+    display:flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.06em; color:var(--mint);
+  }
+  .pulse-dot{
+    width:7px; height:7px; border-radius:50%; background:var(--mint);
+    box-shadow:0 0 0 0 rgba(53,225,161,0.6);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(53,225,161,0.55);}
+    70%{box-shadow:0 0 0 8px rgba(53,225,161,0);}
+    100%{box-shadow:0 0 0 0 rgba(53,225,161,0);}
+  }
+  .console-nav{display:none; gap:22px; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--muted);}
+  .console-nav a{text-decoration:none; transition:color .2s;}
+  .console-nav a:hover{color:var(--mint);}
+  @media(min-width:760px){.console-nav{display:flex;}}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:64px 0 56px;}
+  .hero-grid{
+    display:grid; grid-template-columns:1fr; gap:44px; align-items:center;
+  }
+  @media(min-width:760px){
+    .hero-grid{grid-template-columns:280px 1fr; gap:56px;}
+  }
+
+  .feed{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:10px;
+    border-radius:var(--radius);
+  }
+  .feed-frame{
+    position:relative;
+    overflow:hidden;
+    aspect-ratio:1/1;
+    border:1px solid rgba(255,59,59,0.3);
+  }
+  .feed-frame img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    filter:saturate(0.92) contrast(1.03);
+  }
+  .feed-frame::before{
+    content:"";
+    position:absolute; inset:0;
+    background:linear-gradient(transparent 0%, rgba(255,59,59,0.10) 50%, transparent 100%);
+    height:40%;
+    animation:scan 4.5s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes scan{
+    0%{transform:translateY(-100%);}
+    100%{transform:translateY(250%);}
+  }
+  .feed-corners span{
+    position:absolute; width:14px; height:14px;
+    border-color:var(--mint); border-style:solid; border-width:0;
+  }
+  .feed-corners span:nth-child(1){top:6px; left:6px; border-top-width:2px; border-left-width:2px;}
+  .feed-corners span:nth-child(2){top:6px; right:6px; border-top-width:2px; border-right-width:2px;}
+  .feed-corners span:nth-child(3){bottom:6px; left:6px; border-bottom-width:2px; border-left-width:2px;}
+  .feed-corners span:nth-child(4){bottom:6px; right:6px; border-bottom-width:2px; border-right-width:2px;}
+  .feed-tag{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-top:10px; padding:0 2px;
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--muted); letter-spacing:0.05em;
+  }
+  .feed-tag .rec{color:#FF6B6B; display:flex; align-items:center; gap:5px;}
+  .rec-dot{width:6px; height:6px; border-radius:50%; background:#FF6B6B; animation:blink 1.4s step-start infinite;}
+  @keyframes blink{50%{opacity:0.15;}}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--mint);
+    letter-spacing:0.08em; margin-bottom:14px; display:block;
+  }
+  h1{
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(2.1rem, 5vw, 3.1rem); line-height:1.05; letter-spacing:-0.01em;
+  }
+  .role{
+    font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:1.15rem;
+    color:var(--muted); margin-top:10px;
+  }
+  .status-line{
+    margin-top:20px; font-family:'JetBrains Mono',monospace; font-size:13px;
+    color:var(--mint); display:flex; align-items:center; gap:8px;
+  }
+  .intro{max-width:52ch; margin-top:18px; color:#C9C9C9; font-size:15.5px;}
+  .cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:28px;}
+  .btn{
+    font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.02em;
+    padding:12px 20px; border-radius:var(--radius); text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px; transition:all .18s ease; cursor:pointer; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--mint); color:#FFFFFF; font-weight:700;}
+  .btn-primary:hover{background:#FF6161; transform:translateY(-1px);}
+  .btn-ghost{border-color:var(--line); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--mint); color:var(--mint);}
+
+  /* ---------- Section shell ---------- */
+  section{padding:52px 0;}
+  .section-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:30px;
+    border-bottom:1px solid var(--line); padding-bottom:14px;
+  }
+  .section-head .idx{font-family:'JetBrains Mono',monospace; color:var(--mint-dim); font-size:13px;}
+  .section-head h2{font-family:'Space Grotesk',sans-serif; font-size:1.5rem; font-weight:600;}
+  .section-head .sub{margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted);}
+
+  /* ---------- Skills as status modules ---------- */
+  .modules{display:grid; grid-template-columns:1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  @media(min-width:640px){.modules{grid-template-columns:1fr 1fr;}}
+  .module{background:var(--panel); padding:20px 22px;}
+  .module-top{display:flex; align-items:center; justify-content:between; gap:10px; margin-bottom:10px;}
+  .module-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px;}
+  .module-status{
+    margin-left:auto; font-family:'JetBrains Mono',monospace; font-size:10.5px;
+    color:var(--mint); display:flex; align-items:center; gap:6px; letter-spacing:0.04em;
+  }
+  .module-status .dot{width:6px; height:6px; border-radius:50%; background:var(--mint); animation:pulse 2.2s infinite;}
+  .module-items{font-size:13.5px; color:var(--muted); line-height:1.7;}
+  .module-items b{color:var(--text); font-weight:500;}
+
+  /* ---------- Projects as logs ---------- */
+  .log{
+    border:1px solid var(--line); background:var(--panel);
+    border-radius:var(--radius); padding:24px 26px; margin-bottom:18px;
+    border-left:3px solid var(--mint);
+  }
+  .log-meta{
+    display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted); margin-bottom:12px;
+  }
+  .tag{
+    padding:2px 8px; border:1px solid var(--mint-dim); color:var(--mint);
+    border-radius:2px; letter-spacing:0.04em; font-size:10.5px;
+  }
+  .log h3{font-family:'Space Grotesk',sans-serif; font-size:1.15rem; font-weight:600; margin-bottom:12px;}
+  .log ul{list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .log li{
+    font-size:14px; color:#C9C9C9; padding-left:18px; position:relative;
+  }
+  .log li::before{
+    content:"›"; position:absolute; left:0; color:var(--mint); font-family:'JetBrains Mono',monospace;
+  }
+
+  /* ---------- Certifications ---------- */
+  .badges{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line);}
+  .badge{
+    background:var(--panel); padding:16px 22px; display:flex; align-items:center; gap:14px;
+    font-size:14.5px;
+  }
+  .badge .check{
+    font-family:'JetBrains Mono',monospace; color:var(--mint); font-size:13px; flex-shrink:0;
+  }
+  .badge .lang-row{margin-left:auto; display:flex; gap:8px;}
+  .chip{
+    font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--muted);
+    border:1px solid var(--line); padding:3px 9px; border-radius:2px;
+  }
+
+  /* ---------- Contact / footer ---------- */
+  .contact-panel{
+    border:1px solid var(--line); background:var(--panel-2);
+    border-radius:var(--radius); padding:36px 30px;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  @media(min-width:640px){
+    .contact-panel{flex-direction:row; align-items:center; justify-content:space-between;}
+  }
+  .contact-panel h2{font-family:'Space Grotesk',sans-serif; font-size:1.4rem; font-weight:600; margin-bottom:6px;}
+  .contact-panel p{color:var(--muted); font-size:14px;}
+  .contact-links{display:flex; flex-wrap:wrap; gap:10px;}
+
+  footer{
+    border-top:1px solid var(--line); padding:26px 0; margin-top:10px;
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--muted);
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between;
+  }
+</style>
+</head>
+<body>
+
+  <div class="console-bar">
+    <div class="wrap">
+      <div class="console-id">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span>sanjay-l / portfolio.sys</span>
+      </div>
+      <nav class="console-nav">
+        <a href="#skills">skills</a>
+        <a href="#projects">projects</a>
+        <a href="#certs">certifications</a>
+        <a href="#contact">contact</a>
+      </nav>
+      <div class="console-status"><span class="pulse-dot"></span><span id="clock">ONLINE</span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="feed">
+          <div class="feed-frame">
+            <img src="me2.jpeg" alt="Portrait of Sanjay L">
+            <div class="feed-corners"><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="feed-tag">
+            <span class="rec"><span class="rec-dot"></span> LIVE</span>
+            <span>CAM_01 · CHENNAI</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="eyebrow">// SYSTEM PROFILE</span>
+          <h1>Sanjay L.</h1>
+          <div class="role">Full Stack Developer — MERN &amp; AI Integration </div>
+          <div class="status-line"><span class="pulse-dot" style="width:7px;height:7px;"></span> ALL SYSTEMS OPERATIONAL</div>
+          <p class="intro">Results-driven full stack developer building intelligent, user-friendly applications with React, Node.js and MongoDB — extended with computer vision and generative AI, including YOLOv8 and Google Gemini. Based in Chennai, currently completing B.E. in Computer Science &amp; Engineering at Meenakshi College of Engineering.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="Sanjay_L_Resume.pdf" download="Sanjay_L_Resume.pdf">↓ Download Resume</a>
+            <a class="btn btn-ghost" href="#projects">View Projects</a>
+            <a class="btn btn-ghost" href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="section-head">
+        <span class="idx">01</span>
+        <h2>Skill Modules</h2>
+        <span class="sub">4 / 4 MODULES ACTIVE</span>
+      </div>
+      <div class="modules">
+        <div class="module">
+          <div class="module-top">
+            <span class="module-name">Languages</span>
+            <span class="module-status"><span class="dot"></span>OK</span>
+          </div>
+          <div class="module-items">Python <b>(basic)</b> · Java <b>(basic)</b> · JavaScript</div>
+        </div>
+        <div class="module">
+          <div class="module-top">
+            <span class="module-name">Web Stack</span>
+            <span class="module-status"><span class="dot"></span>OK</span>
+          </div>
+          <div class="module-items">React.js · Node.js · Express.js</div>
+        </div>
+        <div class="module">
+          <div class="module-top">
+            <span class="module-name">Data Layer</span>
+            <span class="module-status"><span class="dot"></span>OK</span>
+          </div>
+          <div class="module-items">MongoDB · MySQL</div>
+        </div>
+        <div class="module">
+          <div class="module-top">
+            <span class="module-name">AI / Vision</span>
+            <span class="module-status"><span class="dot"></span>OK</span>
+          </div>
+          <div class="module-items">YOLOv8 · Google Gemini AI</div>
+        </div>
+        <div class="module">
+          <div class="module-top">
+            <span class="module-name">Tooling</span>
+            <span class="module-status"><span class="dot"></span>OK</span>
+          </div>
+          <div class="module-items">Git · GitHub · VS Code · Google Colab</div>
+        </div>
+        <div class="module">
+          <div class="module-top">
+            <span class="module-name">Core &amp; Strengths</span>
+            <span class="module-status"><span class="dot"></span>OK</span>
+          </div>
+          <div class="module-items">OOPS · DBMS · Problem solving · Leadership · Team collaboration</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <span class="idx">02</span>
+        <h2>Project Logs</h2>
+        <span class="sub">2 ENTRIES</span>
+      </div>
+
+      <div class="log">
+        <div class="log-meta">
+          <span class="tag">IoT</span>
+          <span class="tag">MONITORING</span>
+          <span>LOG #001</span>
+        </div>
+        <h3>Smart Building Management — Fire Alarm System</h3>
+        <ul>
+          <li>Developed a smart fire alarm monitoring system to enhance building safety and emergency response.</li>
+          <li>Implemented real-time monitoring and alert mechanisms for emergency detection.</li>
+          <li>Improved safety through automated monitoring and notification processes.</li>
+        </ul>
+      </div>
+
+      <div class="log">
+        <div class="log-meta">
+          <span class="tag">WEB</span>
+          <span class="tag">UI/UX</span>
+          <span>LOG #002</span>
+        </div>
+        <h3>Portfolio Website</h3>
+        <ul>
+          <li>Developed a personal portfolio website showcasing skills and projects.</li>
+          <li>Implemented responsive design for multiple screen sizes.</li>
+          <li>Enhanced accessibility and user experience through structured navigation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="certs">
+      <div class="section-head">
+        <span class="idx">03</span>
+        <h2>Certifications</h2>
+        <span class="sub">VERIFIED</span>
+      </div>
+      <div class="badges">
+        <div class="badge"><span class="check">[✓]</span> Website UI/UX Designing using ChatGPT
+          <span class="lang-row"><span class="chip">TAMIL</span><span class="chip">ENGLISH</span></span>
+        </div>
+        <div class="badge"><span class="check">[✓]</span> Getting Started with Full Stack Java Development</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <span class="idx">04</span>
+        <h2>Contact</h2>
+        <span class="sub">READY</span>
+      </div>
+      <div class="contact-panel">
+        <div>
+          <h2>Let's build something.</h2>
+          <p>Open to full stack &amp; AI-driven development roles.</p>
+        </div>
+        <div class="contact-links">
+          <a class="btn btn-primary" href="mailto:Sanjay2020621@gmail.com">Email</a>
+          <a class="btn btn-ghost" href="tel:8925226871">Call</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/sanjay-l-302473351?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Sanjay L. — portfolio.sys</span>
+      <span id="footer-clock">uptime: --</span>
+    </footer>
+
+  </div>
+
+<script>
+  const clockEl = document.getElementById('clock');
+  const footerClock = document.getElementById('footer-clock');
+  const start = Date.now();
+  function pad(n){return n.toString().padStart(2,'0');}
+  function tick(){
+    const now = new Date();
+    clockEl.textContent = `ONLINE · ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+    const elapsed = Math.floor((Date.now()-start)/1000);
+    footerClock.textContent = `session: ${pad(Math.floor(elapsed/60))}:${pad(elapsed%60)}`;
+  }
+  tick();
+  setInterval(tick, 1000);
+</script>
+
+</body>
+</html>
